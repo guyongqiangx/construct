@@ -228,7 +228,6 @@ class Path(ExprMixin):
 # list_ = Path2("list_")
 class Path2(ExprMixin):
 
-
     # list_ = Path2("list_")中：__name="list_", __index=None, __parent=None
     def __init__(self, name, index=None, parent=None):
         self.__name = name
@@ -287,10 +286,18 @@ class FuncPath(ExprMixin):
             return self.__func(self.__operand(operand) if callable(self.__operand) else self.__operand)
 
 
+# 生成this, obj_ 和 list_ 内置表达式对象
+# this, 如: this._.field, this["_"]["field"], this.width, this.height, this.offset
+# obj_, 如: obj_
+# list_, 如: list_[-1]
+# 文档提到: The list_ expression is implemented but buggy, using it is not recommended at present time.
 this = Path("this")
 obj_ = Path("obj_")
 list_ = Path2("list_")
 
+
+# 生成len_, sum_, min_, max_ 和 abs_ 内置函数
+# len_函数, 如: len_(this.items)
 len_ = FuncPath(len)
 sum_ = FuncPath(sum)
 min_ = FuncPath(min)
